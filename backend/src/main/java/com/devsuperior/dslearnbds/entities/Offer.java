@@ -2,12 +2,16 @@ package com.devsuperior.dslearnbds.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,14 +26,22 @@ public class Offer implements Serializable {
 	private Instant startMoment;
 	private Instant endMoment;
 
+	@ManyToOne
+	@JoinColumn(name = "course_id")
+	private Course course;
+	
+	@OneToMany(mappedBy = "offer")
+	private List<Resource> resources;
+
 	public Offer() {
 	}
 
-	public Offer(Long id, String edition, Instant startMoment, Instant endMoment) {
+	public Offer(Long id, String edition, Instant startMoment, Instant endMoment, Course course) {
 		this.id = id;
 		this.edition = edition;
 		this.startMoment = startMoment;
 		this.endMoment = endMoment;
+		this.course = course;
 	}
 
 	public Long getId() {
@@ -62,6 +74,18 @@ public class Offer implements Serializable {
 
 	public void setEndMoment(Instant endMoment) {
 		this.endMoment = endMoment;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+	public List<Resource> getResources() {
+		return resources;
 	}
 
 	@Override
