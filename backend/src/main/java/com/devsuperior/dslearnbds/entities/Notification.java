@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +22,9 @@ public class Notification implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String text;
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant moment;
-	private Boolean read;
+	private boolean read;
 	private String route;
 
 	@ManyToOne
@@ -32,7 +34,7 @@ public class Notification implements Serializable {
 	public Notification() {
 	}
 
-	public Notification(Long id, String text, Instant moment, Boolean read, String route, User user) {
+	public Notification(Long id, String text, Instant moment, boolean read, String route, User user) {
 		this.id = id;
 		this.text = text;
 		this.moment = moment;
@@ -65,11 +67,11 @@ public class Notification implements Serializable {
 		this.moment = moment;
 	}
 
-	public Boolean getRead() {
+	public boolean getRead() {
 		return read;
 	}
 
-	public void setRead(Boolean read) {
+	public void setRead(boolean read) {
 		this.read = read;
 	}
 
