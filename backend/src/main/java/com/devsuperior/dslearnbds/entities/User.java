@@ -141,4 +141,7 @@ public class User implements UserDetails, Serializable {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
 	}
 
+	public boolean hasRole(String roleName) {
+		return roles.stream().anyMatch(role -> role.getAuthority().equals(roleName));
+	}
 }

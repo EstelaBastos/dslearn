@@ -22,6 +22,9 @@ public class UserService implements UserDetailsService {
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
+	private AuthService authService;
+	
+	@Autowired
 	private UserRepository repository;
 	
 	@Override
@@ -37,6 +40,8 @@ public class UserService implements UserDetailsService {
 	
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
+		authService.validadeSelfOrAdmin(id);
+		
 		Optional<User> optional = repository.findById(id);
 		User entity = optional.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new UserDTO(entity);
